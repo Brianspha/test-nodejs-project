@@ -11,7 +11,6 @@ process.env.SECRET = cryptoRandomString({
     type: 'url-safe'
 });
 var port = process.env.PORT
-console.log(`Server Port ${port}`)
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../js/api');
@@ -33,31 +32,15 @@ describe('/POST user', () => {
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.property('error').eql('Sign-up succesfull');
+                res.body.should.have.property('success').eql(true);
                 done();
+                authToken = res.body.token;
             });
     })
 })
 var authenticatedUser = request.agent(server);
 
-describe('/GET login', () => {
-    it('should login a user', (done) => {
-        chai.request(server)
-            .get('/login')
-            .send({
-                "username": "sphamandla",
-                "password": "123456789"
-            })
-            .end((err, res) => {
-                authToken = res.body.token
-                console.log('returned token: ', authToken)
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('message').eql('Authentication successful!');
-                done();
-            });
-    })
-})
+
 describe('/POST car', () => {
     it('should register a car', (done) => {
         chai.request(server)
@@ -69,10 +52,9 @@ describe('/POST car', () => {
                 "model": "yaris",
                 "millage": 1234,
                 "year": 123123,
-                "price":123123
+                "price": 123123
             })
             .end((err, res) => {
-                console.log(res.body)
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('error').eql('Succesfully uploaded car');
@@ -81,36 +63,15 @@ describe('/POST car', () => {
     })
 })
 
-describe('/GET get a car', () => {
-    it('should get a car', (done) => {
-        chai.request(server)
-            .get('/getcar')
-            .set('authorization', 'Bearer ' + authToken)
-            .send({
-                "username": "sphamandla",
-                "make": "toyota",
-                "model": "yaris"
-            })
-            .end((err, res) => {
-                console.log(res.body)
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('success').eql(true);
-                done();
-            });
-    })
-})
-
 describe('/GET get all user cars', () => {
     it('should get all user cars', (done) => {
         chai.request(server)
-            .get('/getcars')
+            .post('/getcars')
             .set('authorization', 'Bearer ' + authToken)
             .send({
                 "username": "sphamandla"
             })
             .end((err, res) => {
-                console.log(res.body)
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('cars').should.be.a('object');
@@ -131,7 +92,6 @@ describe('/POST remove car', () => {
                 "model": "yaris"
             })
             .end((err, res) => {
-                console.log(res.body)
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('success').eql(true);

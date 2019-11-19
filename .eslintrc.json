@@ -1,9 +1,9 @@
 {
     "extends": "standard",
     "env": {
-        "jest": true
+        "jest": false
     },
     "rules": {
-        "semi": [2, "always"]
+        "no-unused-vars": "off"
     }
 }
