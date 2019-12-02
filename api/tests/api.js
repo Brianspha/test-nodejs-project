@@ -1,16 +1,10 @@
 /**============================== api imports  ==============================*/
 var expect = require('chai').expect;
-require('dotenv').config({
-    path: '../config/vars.env',
-    encoding: 'utf8'
-})
 const cryptoRandomString = require('crypto-random-string');
-
 process.env.SECRET = cryptoRandomString({
     length: 10,
     type: 'url-safe'
 });
-var port = process.env.PORT
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../js/api');
