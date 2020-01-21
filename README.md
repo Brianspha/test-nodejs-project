@@ -1,4 +1,4 @@
-# coding-test
+# test-nodejs-project
 
 ## Project setup
 ```
