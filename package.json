@@ -38,7 +38,7 @@
     "chai-http": "^4.3.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "request": "^2.88.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
